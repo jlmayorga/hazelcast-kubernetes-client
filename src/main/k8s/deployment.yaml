@@ -1,0 +1,37 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hazelcast-kubernetes-client
+  namespace: default
+  labels:
+    app: hazelcast-kubernetes-client
+    version: 1.0.0-SNAPSHOT
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hazelcast-kubernetes-client
+      version: 1.0.0-SNAPSHOT
+  template:
+    metadata:
+      labels:
+        app: hazelcast-kubernetes-client
+        version: 1.0.0-SNAPSHOT
+    spec:
+      serviceAccount: default
+      containers:
+      - env:
+        - name: HAZELCAST_KUBERNETES_NAMESPACE
+          value: default
+        - name: HAZELCAST_KUBERNETES_SERVICE_NAME
+          value: hazelcast-kubernetes
+        - name: KUBERNETES_AUTH_TOKEN
+          value:
+        image: <DOCKER_HUB_USERNAME>/hazelcast-kubernetes-client
+        imagePullPolicy: Always
+        name: hazelcast-kubernetes-client
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+      restartPolicy: Always

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hazelcast-kubernetes-client
+  namespace: default
+  labels:
+    app: hazelcast-kubernetes-client
+    version: 1.0.0-SNAPSHOT
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: hazelcast-kubernetes-client
+    version: 1.0.0-SNAPSHOT
